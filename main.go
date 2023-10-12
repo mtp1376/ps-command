@@ -19,7 +19,7 @@ func getPpid(pid string) string {
 
 func main() {
 	entries, _ := os.ReadDir("/proc/")
-	fmt.Printf("PID\tCMD\t\t\t\t\t\t\t\tPPID\n") // Header row
+	fmt.Printf("PID\tCMD\tPPID\n") // Header row
 	for _, entry := range entries {
 		if _, err := strconv.Atoi(entry.Name()); err != nil || !entry.IsDir() {
 			continue
@@ -30,6 +30,6 @@ func main() {
 		content, _ := os.ReadFile(cmdlineAddress)
 		cleanCmdLine := strings.Replace(string(content), "\000", " ", -1)
 		ppid := getPpid(pid)
-		fmt.Printf("%s\t%s\t\t\t\t\t\t\t\t%s\n", pid, cleanCmdLine, ppid)
+		fmt.Printf("%s\t%s\t%s\n", pid, cleanCmdLine, ppid)
 	}
 }
